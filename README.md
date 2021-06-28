@@ -6,24 +6,39 @@
 **Unpaired Image-to-Image Translation
 using Cycle-Consistent Adversarial Networks**
 (<https://arxiv.org/pdf/1703.10593.pdf>)
-####Загрузка проекта
+
+Не удалось выполнить загрузку весов через скрипт (из-за размера),
+поэтому прикрепляю ссылки на Google Drive:
+
+horse2zebra(https://drive.google.com/file/d/1E1AN2fvtmSQX5YE6d0bBT2xshxToXuqa/view?usp=sharing)
+
+person2avatar(https://drive.google.com/file/d/1BHwS-Xhsy7b009pxS1_pYcKi9mg7zeyh/view?usp=sharing)
+
+Их необходимо добавить в корень проекта
+
+
+###Загрузка проекта
 
     git clone https://github.com/PaulFirst/CycleGAN.git
     pip install -r requirements.txt
     bash ./bin/download_horse2zebra.sh
     bash ./bin/download_person2avatar.sh
 
-####Тестирование на horse2zebra
 
-    python3 ./src/train.py --weight_path ./h2zCycleGAN.pth --task horse2zebra
+###Тестирование на horse2zebra
 
-####Тестирование на person2avatar
+    python3 ./src/train.py --weight_path ./h2zCycleGAN.pth --task horse2zebra --weight_path ./h2zCycleGAN.pth
 
-    python3 ./src/train.py --weight_path ./p2aCycleGAN.pth --task person2avatar
+
+###Тестирование на person2avatar
+
+    python3 ./src/train.py --weight_path ./p2aCycleGAN.pth --task person2avatar --weight_path ./p2aCycleGAN.pth
 
 Результаты появлятся в папке test_results
 
+
 ###Результаты работы обученной модели
+
 #####Лошадь-Зебра
 Модель была обучена в течении 60 эпох (что несколько мало,
 так как качество можно еще улучшить) на наборе данных
