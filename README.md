@@ -27,12 +27,12 @@ person2avatar(https://drive.google.com/file/d/1BHwS-Xhsy7b009pxS1_pYcKi9mg7zeyh/
 
 ###Тестирование на horse2zebra
 
-    python3 ./src/train.py --weight_path ./h2zCycleGAN.pth --task horse2zebra --weight_path ./h2zCycleGAN.pth
+    python3 ./src/train.py --weight_path ./h2zCycleGAN.pth --task horse2zebra 
 
 
 ###Тестирование на person2avatar
 
-    python3 ./src/train.py --weight_path ./p2aCycleGAN.pth --task person2avatar --weight_path ./p2aCycleGAN.pth
+    python3 ./src/train.py --weight_path ./p2aCycleGAN.pth --task person2avatar 
 
 Результаты появлятся в папке test_results
 
