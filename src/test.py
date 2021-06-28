@@ -28,15 +28,15 @@ genB = Generator(3, 3).to(DEVICE)
 
 if args.weight_path is None:
     if args.task == 'horse2zebra':
-        if os.path.exists('/h2zCycleGAN.pth'):
-            checkpoint = torch.load('/h2zCycleGAN.pth')
+        if os.path.exists('./h2zCycleGAN.pth'):
+            checkpoint = torch.load('./h2zCycleGAN.pth')
             genA.load_state_dict(checkpoint['genA_state_dict'])
             genB.load_state_dict(checkpoint['genB_state_dict'])
 
         else:
             assert 'Файл весов отсутсвтует'
     elif args.task == 'person2avatar':
-        if os.path.exists('/p2aCycleGAN.pth'):
+        if os.path.exists('./p2aCycleGAN.pth'):
             checkpoint = torch.load('/h2zCycleGAN.pth')
             genA.load_state_dict(checkpoint['genA_state_dict'])
             genB.load_state_dict(checkpoint['genB_state_dict'])
@@ -52,7 +52,7 @@ else:
 transform = tf.Compose(
     [tf.ToTensor(), tf.Resize((256, 256)), tf.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-directory = '/horse2zebra' if args.task == 'horse2zebra' else '/person2avatar'
+directory = './horse2zebra' if args.task == 'horse2zebra' else './person2avatar'
 dataset = CustomDataset(directory, 'test')
 dataloader = DataLoader(dataset, shuffle=True, batch_size=1)
 
@@ -61,12 +61,14 @@ imgB = None
 fakeA = None
 fakeB = None
 
-folder_path = '/test_results'
-for file_object in os.listdir(folder_path):
-    file_object_path = os.path.join(folder_path, file_object)
-    if os.path.isfile(file_object_path) or os.path.islink(file_object_path):
-        os.unlink(file_object_path)
+folder_path = './test_results'
+if os.path.isdir(folder_path):
+    for file_object in os.listdir(folder_path):
+        file_object_path = os.path.join(folder_path, file_object)
+        if os.path.isfile(file_object_path) or os.path.islink(file_object_path):
+            os.unlink(file_object_path)
 
+os.makedirs(folder_path, exist_ok=True)
 
 if args.images == 'AB' or args.images == 'B':
     if args.imga_path is not None:
@@ -75,6 +77,7 @@ if args.images == 'AB' or args.images == 'B':
         imgA = transform(imgA)
     else:
         imgA, _ = next(iter(dataloader))
+    imgA = imgA.to(DEVICE)
     fakeB = genB(imgA)
 
 if args.images == 'AB' or args.images == 'A':
@@ -84,24 +87,25 @@ if args.images == 'AB' or args.images == 'A':
         imgB = transform(imgB)
     else:
         _, imgB = next(iter(dataloader))
+    imgB = imgB.to(DEVICE)
     fakeA = genA(imgB)
 
 if args.images == 'AB' or args.images == 'A' and fakeA is not None:
     imgB = 0.5 * (imgB.data + 1.0)
     fakeA = 0.5 * (fakeA.data + 1.0)
-    utils.save_image(fakeA.detach(),
-                     f"/test_results/realB.png",
+    utils.save_image(imgB.detach(),
+                     f"./test_results/realB.png",
                      normalize=True)
     utils.save_image(fakeA.detach(),
-                     f"/test_results/fakeA.png",
+                     f"./test_results/fakeA.png",
                      normalize=True)
 
 if args.images == 'AB' or args.images == 'B' and fakeB is not None:
     imgA = 0.5 * (imgA.data + 1.0)
-    utils.save_image(fakeA.detach(),
-                     f"/test_results/realA.png",
+    utils.save_image(imgA.detach(),
+                     f"./test_results/realA.png",
                      normalize=True)
     fakeB = 0.5 * (fakeB.data + 1.0)
     utils.save_image(fakeB.detach(),
-                     f"/test_results/results/fakeB.png",
+                     f"./test_results/fakeB.png",
                      normalize=True)

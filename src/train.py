@@ -12,6 +12,7 @@ import torchvision.utils as utils
 import matplotlib.pyplot as plt
 import itertools
 from src.utils.utils import denormalize, weights_init
+import os
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 # EPOCHS = 100
@@ -76,6 +77,13 @@ optimDiscB = Adam(discB.parameters(), args.lr, betas=(args.lr_beta, 0.999))
 # цикл обучения
 log_template = "\nEpoch {ep:03d} G_loss: {g_loss:0.4f} \
     D_A_loss {da_loss:0.4f} D_B_loss {db_loss:0.4f}"
+
+os.makedirs('./results/resultsB/fake', exist_ok=True)
+os.makedirs('./results/resultsB/real', exist_ok=True)
+os.makedirs('./results/resultsB/reconstructed', exist_ok=True)
+os.makedirs('./results/resultsA/fake', exist_ok=True)
+os.makedirs('./results/resultsA/real', exist_ok=True)
+os.makedirs('./results/resultsA/reconstructed', exist_ok=True)
 
 with tqdm(desc="epoch", total=args.total_epochs) as pbar:
     for epoch in range(current_epoch, args.total_epochs):
