@@ -6,20 +6,25 @@
 **Unpaired Image-to-Image Translation
 using Cycle-Consistent Adversarial Networks**
 (<https://arxiv.org/pdf/1703.10593.pdf>)
-###Загрузка проекта
+####Загрузка проекта
 
     git clone https://github.com/PaulFirst/CycleGAN.git
     pip install -r requirements.txt
     bash ./bin/download_horse2zebra.sh
     bash ./bin/download_person2avatar.sh
-###Тестирование на horse2zebra
+
+####Тестирование на horse2zebra
+
     python3 ./src/train.py --weight_path ./h2zCycleGAN.pth --task horse2zebra
-###Тестирование на person2avatar
+
+####Тестирование на person2avatar
+
     python3 ./src/train.py --weight_path ./p2aCycleGAN.pth --task person2avatar
+
 Результаты появлятся в папке test_results
 
 ###Результаты работы обученной модели
-####Лошадь-Зебра
+#####Лошадь-Зебра
 Модель была обучена в течении 60 эпох (что несколько мало,
 так как качество можно еще улучшить) на наборе данных
 horse2zebra для проверки ее способности выполнять перенос стиля.
