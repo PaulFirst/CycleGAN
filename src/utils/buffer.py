@@ -1,4 +1,5 @@
-# заимствованный код
+# заимствованный код ImagePool из оригинального репозитория CycleGAN
+# (https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/f13aab8148bd5f15b9eb47b690496df8dadbab0c/util/image_pool.py#L5)
 
 import random
 import torch

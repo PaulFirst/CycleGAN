@@ -51,14 +51,3 @@ class CustomDataset(Dataset):
         return imgA, imgB
 
 
-if __name__ == '__main__':
-    dataset = CustomDataset('D:\\Projects\\CycleGAN\\horse2zebra', 'train')
-    dataloader = DataLoader(dataset, shuffle=True, batch_size=3)
-    imgsA, imgsB = next(iter(dataloader))
-    print(imgsA.shape)
-
-    fig, axes = plt.subplots(3, 2)
-    for i in range(3):
-        axes[i, 0].imshow(imgsA[i].detach().to('cpu').numpy().transpose(1, 2, 0))
-        axes[i, 1].imshow(imgsB[i].detach().to('cpu').numpy().transpose(1, 2, 0))
-    plt.show()
